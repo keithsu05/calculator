@@ -41,7 +41,9 @@ const populateDisplay = function(digit){
     display.textContent=digit
     
 }
-let numberArray = ["one","two","three","four","five","six","seven","eight","nine"]
+let numberArray = ["one","two","three","four","five","six","seven","eight","nine"
+    
+]
 
 const createEventListener = function(){
     //use a loop to iterate 9 times
@@ -59,6 +61,7 @@ const createEventListener = function(){
         elementSelect.addEventListener("click",()=>{
             populateDisplay(i+1);
         })
+        displayValue=i+1
 
         
         
