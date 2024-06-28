@@ -16,7 +16,9 @@ const multiply = function(a,b){
 }
 
 const divide =function(a,b){
-return a/b
+    if(b==0){return "error"}
+    else{return a/b}
+
 }
 
 let displayValue = ""
@@ -63,7 +65,7 @@ equalsButton.addEventListener("click",()=>{
     //unless we reset the operator everytime we press equals which creates the state where operator is ""//
     //but this would affect the above case ahhhh
 
-    else if(!solution=="" && displayValue=="" && !memoryValue==""){
+    else if(operator==""){
 
     }
     //this resolves the problem where = is clicked early, equals just performs same function as clear, actually u dont need to clear it lol
@@ -155,7 +157,8 @@ const createOperatorEventListener= function(){
             operationFunction()
             operator= elementId
             display.textContent=solution
-            
+            //how to i prevent the number from dissapoearing the first timei press an operator aghg
+            //(this case is displayevalue is defined only before i press the operator)
             
         })
     }
@@ -174,15 +177,22 @@ if (displayValue && memoryValue) {
     displayValue =""
     runOnCalculation = true
 } 
+//this resolves continuoils pressing of a single operator eg" 10 +++++
 //if display value is empty but memory value is defined
 //assign memory value to display value and perform the operation (done, great!)
-else if(displayValue=="" && !memoryValue==""){
+else if(displayValue=="" && !memoryValue==""&& operator){
     displayValue=memoryValue
     solution= Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
     memoryValue = solution
     displayValue =""
     runOnCalculation = true
 }
+//the below tries to resolve the continuos pressing of = after solution is defined, allowing for operators to be used even after pressing "=,="
+else if(displayValue=="" && !memoryValue==""&& operator==""){
+runOnCalculation=true
+}
+
+
 
 //WHAT DOES THIS DO 
 //this jus passes on display value to memvalue when memoryvalue is yet to be defined(occurs at the beginning of use)
