@@ -19,12 +19,18 @@ const divide =function(a,b){
 return a/b
 }
 
-let displayValue = ''
-let memoryValue = ''
-let operator = ''
-let solution = ''
+let displayValue = ""
+let memoryValue = ""
+let operator = ""
+let solution = ""
+let runOnCalculation = false
 
+//for some reason, = followd by 10x3 gives me probelms
 const operate = function (firstNum,secondNum,operator){
+
+if(displayValue==""||memoryValue==""){return "0"}
+else{
+
 switch(operator){
     case "add":
         return add(firstNum,secondNum)
@@ -40,12 +46,12 @@ switch(operator){
         break;
         
 }
-
+}
 }
 
 const equalsButton = document.getElementById("equals")
 equalsButton.addEventListener("click",()=>{
-    solution = operate(Number(displayValue),Number(memoryValue),operator)
+    solution = Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
     display.textContent = solution
     memoryValue = solution
     displayValue=""
@@ -55,10 +61,10 @@ equalsButton.addEventListener("click",()=>{
 
 const clearButton = document.getElementById("clear")
 clearButton.addEventListener("click",()=>{
-    display.textContent = ""
+    display.textContent = "0"
     displayValue =""
     memoryValue=""
-    operator=''
+    operator=""
     solution=""
     runOnCalculation= false
 } )
@@ -70,7 +76,7 @@ const populateDisplay = function(digit){
 }
 
 
-let numberArray = ["one","two","three","four","five","six","seven","eight","nine"
+let numberArray = ["zero","one","two","three","four","five","six","seven","eight","nine"
     
 ]
 
@@ -78,7 +84,7 @@ const createEventListener = function(){
     //use a loop to iterate 9 times
     // each iteration create an event listener for 
     //each digit
-    for (let i=0;i<9;i++){
+    for (let i=0;i<10;i++){
         
     
         //need array for one-nine
@@ -88,12 +94,25 @@ const createEventListener = function(){
         const elementId = `${numberArray[i]}`
         const elementSelect = document.getElementById(elementId);
         elementSelect.addEventListener("click",()=>{
+            
+            if(memoryValue==""&&displayValue==""){
+                display.textContent=""
+                populateDisplay(i)
+                displayValue+=i
+            }
+            else{
             checkRunOnCalc();
-            populateDisplay(i+1);
-            displayValue+=i+1
+            populateDisplay(i);
+            displayValue+=i
+            }
         })
         
-
+//now probelms are coming up because variables are no longetr 
+//saved in strings but in numbers cuz we start with null
+//haiz
+//lets stick with saving the strings in the variables
+//before converting them to numbers
+//done
         
         
     }
@@ -109,7 +128,7 @@ createEventListener()
 const operatorArray = ["add","subtract","multiply","divide"]
 const createOperatorEventListener= function(){
     
-    for (let i=0;i<3;i++){
+    for (let i=0;i<4;i++){
         
     
         //need array for one-nine
@@ -122,9 +141,12 @@ const createOperatorEventListener= function(){
             //when clicked, change operator variable 
             //update first and second number
         
-            operator= elementId
+            
             operationFunction()
+            operator= elementId
             display.textContent=solution
+            //theres a problem with the sequencing of the operator(fixed)
+            
         })
     }
 }
@@ -132,8 +154,8 @@ const createOperatorEventListener= function(){
 createOperatorEventListener()
 //when an operator is clicked with existing values under display and memory,
 //operator variable is updated
-//the operate function is carried out on those values first "what if its empty variable"
-//solution is then stored under memory
+//1.the operate function is carried out on those values first "what if its empty variable"
+//2.solution is then stored under memory
 //display value is returned to blank
 
 //if operator is clicked when there is no existing memory value.
@@ -145,11 +167,11 @@ createOperatorEventListener()
 
 //operator event listenr not wokring properly uhgugh
 
-let runOnCalculation = false
+
 const operationFunction = function(){
 if (displayValue && memoryValue) {
     
-  solution = operate(Number(displayValue),Number(memoryValue),`${operator}`)
+  solution = Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
   display.textContent=solution  
   memoryValue = solution
     displayValue =""
