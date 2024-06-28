@@ -51,9 +51,7 @@ equalsButton.addEventListener("click",()=>{
     displayValue=""
 })
 
-//somethings wrong with the equals button
-//i thinkits cuz the display and memory vlaues are calcualted as strings
-//fixed
+
 
 const clearButton = document.getElementById("clear")
 clearButton.addEventListener("click",()=>{
@@ -62,6 +60,7 @@ clearButton.addEventListener("click",()=>{
     memoryValue=""
     operator=''
     solution=""
+    runOnCalculation= false
 } )
 
 const display = document.getElementById("display")
@@ -89,6 +88,7 @@ const createEventListener = function(){
         const elementId = `${numberArray[i]}`
         const elementSelect = document.getElementById(elementId);
         elementSelect.addEventListener("click",()=>{
+            checkRunOnCalc();
             populateDisplay(i+1);
             displayValue+=i+1
         })
@@ -124,7 +124,6 @@ const createOperatorEventListener= function(){
         
             operator= elementId
             operationFunction()
-
             display.textContent=solution
         })
     }
@@ -164,8 +163,9 @@ else {
 
 const checkRunOnCalc = function(){
     if(runOnCalculation==false){}
-    else{//on clicking new digit, display is replaced with numeber}
-        //
+    else{
+        display.textContent=''
+        
 }
 }
 
