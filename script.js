@@ -176,7 +176,7 @@ if (displayValue && memoryValue) {
 } 
 //if display value is empty but memory value is defined
 //assign memory value to display value and perform the operation (done, great!)
-if(displayValue=="" && !memoryValue==""){
+else if(displayValue=="" && !memoryValue==""){
     displayValue=memoryValue
     solution= Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
     memoryValue = solution
