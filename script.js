@@ -51,39 +51,47 @@ switch(operator){
 //trying how to fix the issue where i press equals multiple times
 const equalsButton = document.getElementById("equals")
 equalsButton.addEventListener("click",()=>{
-    if(!displayValue==""&&memoryValue==""){
+    //this resolves the problem where = is clicked continusly before the solution is defined(idk how tofix)(fixed)
+    if(!displayValue==""&&memoryValue==""&&solution==""){
         display.textContent=displayValue
-        memoryValue=displayValue
+        
         
     }
 
+    //this resolves the probelm where = is clicked continuously after the solution is defined(this qwould result in all variables
+    //being defined tho....)
+    //unless we reset the operator everytime we press equals which creates the state where operator is ""//
+    //but this would affect the above case ahhhh
+
+    else if(!solution=="" && displayValue=="" && !memoryValue==""){
+
+    }
+    //this resolves the problem where = is clicked early, equals just performs same function as clear, actually u dont need to clear it lol
     else if(displayValue==""||memoryValue==""){
-    display.textContent = "0"
-    displayValue =""
-    memoryValue=""
-    operator=""
-    solution=""
-    runOnCalculation= false
+    
     }
 
-    
+    //default operation with all variables defined
     else{solution = Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
     display.textContent = solution
     memoryValue = solution
     displayValue=""
 }
+operator=""//keep this
 })
 
-
-
-const clearButton = document.getElementById("clear")
-clearButton.addEventListener("click",()=>{
+const clearVariables = function(){
     display.textContent = "0"
     displayValue =""
     memoryValue=""
     operator=""
     solution=""
     runOnCalculation= false
+}
+
+const clearButton = document.getElementById("clear")
+clearButton.addEventListener("click",()=>{
+    clearVariables()
 } )
 
 const display = document.getElementById("display")
@@ -98,16 +106,11 @@ let numberArray = ["zero","one","two","three","four","five","six","seven","eight
 ]
 
 const createEventListener = function(){
-    //use a loop to iterate 9 times
-    // each iteration create an event listener for 
-    //each digit
+    
     for (let i=0;i<10;i++){
         
     
-        //need array for one-nine
-        //get the id of the element from the array
-        //use the id to define a variable in js
-        //add the event listener
+      
         const elementId = `${numberArray[i]}`
         const elementSelect = document.getElementById(elementId);
         elementSelect.addEventListener("click",()=>{
@@ -124,12 +127,7 @@ const createEventListener = function(){
             }
         })
         
-//now probelms are coming up because variables are no longetr 
-//saved in strings but in numbers cuz we start with null
-//haiz
-//lets stick with saving the strings in the variables
-//before converting them to numbers
-//done
+
         
         
     }
@@ -148,44 +146,26 @@ const createOperatorEventListener= function(){
     for (let i=0;i<4;i++){
         
     
-        //need array for one-nine
-        //get the id of the element from the array
-        //use the id to define a variable in js
-        //add the event listener
+        
         const elementId = `${operatorArray[i]}`
         const elementSelect = document.getElementById(`${elementId}`);
         elementSelect.addEventListener("click",()=>{
-            //when clicked, change operator variable 
-            //update first and second number
-        
+            
             
             operationFunction()
             operator= elementId
             display.textContent=solution
-            //theres a problem with the sequencing of the operator(fixed)
+            
             
         })
     }
 }
 
 createOperatorEventListener()
-//when an operator is clicked with existing values under display and memory,
-//operator variable is updated
-//1.the operate function is carried out on those values first "what if its empty variable"
-//2.solution is then stored under memory
-//display value is returned to blank
-
-//if operator is clicked when there is no existing memory value.
-//operator value is updated
-//memory is updated to that of display value
-//display value is cleared for new incoming number
-//NO OPERATION IS PERFORMED
-
-
-//operator event listenr not wokring properly uhgugh
 
 
 const operationFunction = function(){
+    //this performs the operation in the even that displayvalue,memory value and operator are defined
 if (displayValue && memoryValue) {
     
   solution = Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
@@ -194,6 +174,18 @@ if (displayValue && memoryValue) {
     displayValue =""
     runOnCalculation = true
 } 
+//if display value is empty but memory value is defined
+//assign memory value to display value and perform the operation (done, great!)
+if(displayValue=="" && !memoryValue==""){
+    displayValue=memoryValue
+    solution= Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
+    memoryValue = solution
+    displayValue =""
+    runOnCalculation = true
+}
+
+//WHAT DOES THIS DO 
+//this jus passes on display value to memvalue when memoryvalue is yet to be defined(occurs at the beginning of use)
 else {
    memoryValue=displayValue
     displayValue=""
@@ -207,11 +199,6 @@ const checkRunOnCalc = function(){
         
 }
 }
-
-//when an operator is clicked, any following number clicked should
-//replace and show upon the display whilst the previous number is stored
-//under memory
-// to fix this, create a true/false runOnCalualtion variable?
 
         
 
