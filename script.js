@@ -28,7 +28,7 @@ let runOnCalculation = false
 //for some reason, = followd by 10x3 gives me probelms
 const operate = function (firstNum,secondNum,operator){
 
-if(displayValue==""||memoryValue==""){return "0"}
+if(displayValue==""||memoryValue==""){return null}
 else{
 
 switch(operator){
@@ -48,13 +48,30 @@ switch(operator){
 }
 }
 }
-
+//trying how to fix the issue where i press equals multiple times
 const equalsButton = document.getElementById("equals")
 equalsButton.addEventListener("click",()=>{
-    solution = Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
+    if(!displayValue==""&&memoryValue==""){
+        display.textContent=displayValue
+        memoryValue=displayValue
+        
+    }
+
+    else if(displayValue==""||memoryValue==""){
+    display.textContent = "0"
+    displayValue =""
+    memoryValue=""
+    operator=""
+    solution=""
+    runOnCalculation= false
+    }
+
+    
+    else{solution = Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
     display.textContent = solution
     memoryValue = solution
     displayValue=""
+}
 })
 
 
