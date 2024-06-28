@@ -156,7 +156,7 @@ const createOperatorEventListener= function(){
             
             operationFunction()
             operator= elementId
-            display.textContent=solution
+            display.textContent=solution//this is the problem
             //how to i prevent the number from dissapoearing the first timei press an operator aghg
             //(this case is displayevalue is defined only before i press the operator)
             
@@ -177,6 +177,10 @@ if (displayValue && memoryValue) {
     displayValue =""
     runOnCalculation = true
 } 
+//this reolves the empty disply on the first operation
+//else if(displayValue&&!memoryValue){
+
+
 //this resolves continuoils pressing of a single operator eg" 10 +++++
 //if display value is empty but memory value is defined
 //assign memory value to display value and perform the operation (done, great!)
@@ -197,8 +201,10 @@ runOnCalculation=true
 //WHAT DOES THIS DO 
 //this jus passes on display value to memvalue when memoryvalue is yet to be defined(occurs at the beginning of use)
 else {
+    solution=displayValue
    memoryValue=displayValue
     displayValue=""
+    runOnCalculation=true
 }
 }
 
