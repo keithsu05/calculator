@@ -16,8 +16,7 @@ const multiply = function(a,b){
 }
 
 const divide =function(a,b){
-    if(b==0){return "error"}
-    else{return a/b}
+    return a/b
 
 }
 
@@ -50,6 +49,23 @@ switch(operator){
 }
 }
 }
+const clearButton = document.getElementById("clear")
+clearButton.addEventListener("click",()=>{
+    clearVariables()
+} )
+
+const decimalButton = document.getElementById("decimal")
+decimalButton.addEventListener("click",()=>{
+    display.textContent+='.'
+    displayValue+='.'
+})
+
+const display = document.getElementById("display")
+const populateDisplay = function(digit){
+    display.textContent+=`${digit}`
+    
+}
+
 //trying how to fix the issue where i press equals multiple times
 const equalsButton = document.getElementById("equals")
 equalsButton.addEventListener("click",()=>{
@@ -75,9 +91,10 @@ equalsButton.addEventListener("click",()=>{
 
     //default operation with all variables defined
     else{solution = Math.round(operate(Number(memoryValue),Number(displayValue),`${operator}`) *10000)/10000
-    display.textContent = solution
+        display.textContent = solution
     memoryValue = solution
     displayValue=""
+    
 }
 operator=""//keep this
 })
@@ -91,16 +108,7 @@ const clearVariables = function(){
     runOnCalculation= false
 }
 
-const clearButton = document.getElementById("clear")
-clearButton.addEventListener("click",()=>{
-    clearVariables()
-} )
 
-const display = document.getElementById("display")
-const populateDisplay = function(digit){
-    display.textContent+=digit
-    
-}
 
 
 let numberArray = ["zero","one","two","three","four","five","six","seven","eight","nine"
